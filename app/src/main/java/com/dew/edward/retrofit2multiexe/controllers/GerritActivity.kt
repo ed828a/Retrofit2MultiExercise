@@ -45,10 +45,12 @@ class GerritActivity : AppCompatActivity(), Callback<List<Change>> {
     override fun onResponse(call: Call<List<Change>>?, response: Response<List<Change>>?) {
         if (response != null && response.isSuccessful){
             val changesList = response.body()
+            val subjects = changesList?.map{it.subject}
             if (changesList != null){
                 val adapter = ArrayAdapter(this,
-                        android.R.layout.simple_list_item_1, changesList)
+                        android.R.layout.simple_list_item_1, subjects)
                 listGerrit.adapter = adapter
+                changesList.forEach { println(it.subject) }
             }
         }
     }
