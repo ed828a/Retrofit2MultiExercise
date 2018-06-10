@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:showIn="@layout/activity_main">
+
+
+    <Button
+        android:id="@+id/buttonQueryGerrit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Query Gerrit -- Gson"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRSSfeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonGithubApi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Github API"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTwitter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStackOverflow" />
+
+    <Button
+        android:id="@+id/buttonStackOverflow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Stack Overflow -- Query"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGithubApi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRSSfeed" />
+
+    <Button
+        android:id="@+id/buttonTwitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="OAuth -- Twitter"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGithubApi" />
+
+    <Button
+        android:id="@+id/buttonRSSfeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="RSS feed -- XML Converter"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStackOverflow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonQueryGerrit" />
+</android.support.constraint.ConstraintLayout>
