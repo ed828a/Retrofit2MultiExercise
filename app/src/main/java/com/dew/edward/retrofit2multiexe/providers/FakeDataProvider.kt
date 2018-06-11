@@ -13,11 +13,9 @@ class FakeDataProvider {
         fun getQuestions(): List<Question>{
             val questions = arrayListOf<Question>()
             for (i in 0 until 10){
-                val question = Question().apply{
-                    questionId = i.toString()
-                    title = i.toString()
-                    body = i.toString() + "Body"
-                }
+                val question = Question((i.toString()),
+                        (i.toString() + "Body"),
+                        (i.toString()))
 
                 questions.add(question)
             }
@@ -27,12 +25,7 @@ class FakeDataProvider {
         fun getAnswers(): List<Answer> {
             val answers = arrayListOf<Answer>()
             for (i in 0 until 10){
-                val answer = Answer().apply{
-                    answerId = i
-                    accepted = false
-                    score = i
-                }
-
+                val answer = Answer(i, false, i)
                 answers.add(answer)
             }
             return answers
