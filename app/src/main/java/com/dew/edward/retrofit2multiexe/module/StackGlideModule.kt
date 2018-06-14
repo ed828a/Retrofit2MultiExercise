@@ -10,3 +10,6 @@ import com.bumptech.glide.module.AppGlideModule
 @GlideModule
 class AppGlideModule: AppGlideModule() {
 }
+
+
+const val GITHUB_BASE_URL = "https://api.github.com"

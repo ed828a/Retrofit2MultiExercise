@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.menu_credentials -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
