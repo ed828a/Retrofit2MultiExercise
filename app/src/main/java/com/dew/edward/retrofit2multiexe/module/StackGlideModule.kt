@@ -13,3 +13,4 @@ class AppGlideModule: AppGlideModule() {
 
 
 const val GITHUB_BASE_URL = "https://api.github.com"
+const val TWITTER_BASE_URL = "https://api.twitter.com/"
