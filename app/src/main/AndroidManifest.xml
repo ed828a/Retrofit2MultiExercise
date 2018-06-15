@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dew.edward.retrofit2multiexe">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name="com.dew.edward.retrofitYoutube.util.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +27,8 @@
         <activity android:name=".controllers.RSSFeedActivity" />
         <activity android:name=".controllers.StackActivity" />
         <activity android:name=".controllers.GithubActivity" />
-        <activity android:name=".controllers.TwitterActivity"></activity>
+        <activity android:name=".controllers.TwitterActivity" />
+        <activity android:name="com.dew.edward.retrofitYoutube.controller.YoutubeListActivity"></activity>
     </application>
 
 </manifest>

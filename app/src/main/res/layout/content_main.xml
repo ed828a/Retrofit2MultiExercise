@@ -21,9 +21,9 @@
         android:text="Query Gerrit -- Gson"
         android:textColor="@color/colorButtonText"
         app:layout_constraintBottom_toTopOf="@+id/buttonRSSfeed"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonRSSfeed"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonRSSfeed"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -36,9 +36,9 @@
         android:text="Github API"
         android:textColor="@color/colorButtonText"
         app:layout_constraintBottom_toTopOf="@+id/buttonTwitter"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonTwitter"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonTwitter"
         app:layout_constraintTop_toBottomOf="@+id/buttonStackOverflow" />
 
     <Button
@@ -51,9 +51,9 @@
         android:text="Stack Overflow -- Query"
         android:textColor="@color/colorButtonText"
         app:layout_constraintBottom_toTopOf="@+id/buttonGithubApi"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonGithubApi"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonGithubApi"
         app:layout_constraintTop_toBottomOf="@+id/buttonRSSfeed" />
 
     <Button
@@ -65,10 +65,10 @@
         android:padding="8dp"
         android:text="OAuth -- Twitter"
         android:textColor="@color/colorButtonText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonYoutube"
+        app:layout_constraintEnd_toEndOf="@+id/buttonYoutube"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonYoutube"
         app:layout_constraintTop_toBottomOf="@+id/buttonGithubApi" />
 
     <Button
@@ -81,8 +81,24 @@
         android:text="RSS feed -- XML Converter"
         android:textColor="@color/colorButtonText"
         app:layout_constraintBottom_toTopOf="@+id/buttonStackOverflow"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonStackOverflow"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonStackOverflow"
         app:layout_constraintTop_toBottomOf="@+id/buttonQueryGerrit" />
+
+    <Button
+        android:id="@+id/buttonYoutube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        android:padding="8dp"
+        android:text="Youtube"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTwitter" />
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.dew.edward.retrofit2multiexe.controllers.*
+import com.dew.edward.retrofitYoutube.controller.YoutubeListActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.buttonTwitter -> {
                 val intent = Intent(this, TwitterActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.buttonYoutube -> {
+                val intent = Intent(this, YoutubeListActivity::class.java)
                 startActivity(intent)
             }
         }
