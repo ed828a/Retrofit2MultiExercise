@@ -24,11 +24,11 @@ interface YoutubeAPI {
 
 
     @GET("videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=30&regionCode=AU&key=$API_KEY")
-    fun getPopularVideo(): Call<PopularResponseModel>
+    fun getPopularVideo(@Query("pageToken") nextPage: String = ""): Call<PopularResponseModel>
 
     @GET("search?part=snippet&order=relevance&key=$API_KEY")
     fun searchVideoQuery(@Query("q") query: String = "",
-                        @Query("maxResults") itemsPerPage: String = "5",
+                         @Query("maxResults") itemsPerPage: String = "5",
                          @Query("pageToken") pageToken: String = ""): Call<YoutubeResponseModel>
 
 

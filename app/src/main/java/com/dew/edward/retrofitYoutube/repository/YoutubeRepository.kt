@@ -86,16 +86,20 @@ class YoutubeRepository {
 //        call.enqueue(searchCallback)
 
         // get most popular videos
-//        val call = youtubeAPI.getPopularVideo()
-//        call.enqueue(popularVideosCallback)
-        val call: Call<YoutubeResponseModel>
-        call = if (videoNextPageToken.isEmpty()) {
-            youtubeAPI.searchVideoQuery(query = "movie")
+        val call = if (videoNextPageToken.isEmpty()) youtubeAPI.getPopularVideo()
+        else youtubeAPI.getPopularVideo(videoNextPageToken)
 
-        } else {
-            youtubeAPI.searchVideoQuery(query = "movie", pageToken = videoNextPageToken)
-        }
-        call.enqueue(searchCallback)
+        call.enqueue(popularVideosCallback)
+
+        // get search Videos with paging
+//        val call: Call<YoutubeResponseModel>
+//        call = if (videoNextPageToken.isEmpty()) {
+//            youtubeAPI.searchVideoQuery(query = "movie")
+//
+//        } else {
+//            youtubeAPI.searchVideoQuery(query = "movie", pageToken = videoNextPageToken)
+//        }
+//        call.enqueue(searchCallback)
     }
 
 }
