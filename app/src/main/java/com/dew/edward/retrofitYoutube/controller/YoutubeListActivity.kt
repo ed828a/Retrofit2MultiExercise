@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_youtube_list.*
 class YoutubeListActivity : AppCompatActivity() {
 
     val repository = YoutubeRepository()
+    var morePageControl = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,11 @@ class YoutubeListActivity : AppCompatActivity() {
     private val videoListDataChangedReceiver = object: BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             recyclerVideoList.adapter.notifyDataSetChanged()
+            if (morePageControl){
+                repository.getVideos()
+                morePageControl = false
+            }
+
         }
 
     }

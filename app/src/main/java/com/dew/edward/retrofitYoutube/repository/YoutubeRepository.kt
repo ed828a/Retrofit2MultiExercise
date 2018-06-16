@@ -3,6 +3,7 @@ package com.dew.edward.retrofitYoutube.repository
 import android.content.Intent
 import android.util.Log
 import com.dew.edward.retrofitYoutube.api.YoutubeAPI
+import com.dew.edward.retrofitYoutube.model.PopularResponseModel
 import com.dew.edward.retrofitYoutube.model.VideoModel
 import com.dew.edward.retrofitYoutube.model.YoutubeResponseModel
 import com.dew.edward.retrofitYoutube.util.App
@@ -21,12 +22,12 @@ class YoutubeRepository {
     var videoNextPageToken = ""
     val videos = App.videos
 
-    private fun createYoutubeAPI(): YoutubeAPI{
-        val gson =GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()
+    private fun createYoutubeAPI(): YoutubeAPI {
+//        val gson =GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
         val youtubeAPI = retrofit.create(YoutubeAPI::class.java)
@@ -34,16 +35,17 @@ class YoutubeRepository {
         return youtubeAPI
     }
 
-    private val callback = object : Callback<YoutubeResponseModel>{
+    private val searchCallback = object : Callback<YoutubeResponseModel> {
         override fun onFailure(call: Call<YoutubeResponseModel>?, t: Throwable?) {
             t?.printStackTrace()
             Log.d("YoutubeRepository", "getting video from Youtube failed.")
         }
 
         override fun onResponse(call: Call<YoutubeResponseModel>?, response: Response<YoutubeResponseModel>?) {
-            if (response != null && response.isSuccessful){
+            if (response != null && response.isSuccessful) {
                 val responseData: YoutubeResponseModel = response.body()!!
                 videoNextPageToken = responseData.nextPageToken
+                Log.d("YoutubeRepository", "videoNextPageToken: $videoNextPageToken")
                 videos.addAll(responseData.items.map {
                     VideoModel(it.snippet.title, it.snippet.publishedAt, it.snippet.thumbnails.high.url, it.id.videoId)
                 })
@@ -55,12 +57,45 @@ class YoutubeRepository {
         }
     }
 
-    fun getVideos(){
-        val youtubeAPI = createYoutubeAPI()
+    private val popularVideosCallback = object : Callback<PopularResponseModel> {
+        override fun onFailure(call: Call<PopularResponseModel>?, t: Throwable?) {
+            t?.printStackTrace()
+            Log.d("YoutubeRepository", "getting video from Youtube failed.")
+        }
 
-        val call = youtubeAPI.searchVideo()
-        call.enqueue(callback)
+        override fun onResponse(call: Call<PopularResponseModel>?, response: Response<PopularResponseModel>?) {
+            if (response != null && response.isSuccessful) {
+                val responseData: PopularResponseModel = response.body()!!
+                videoNextPageToken = responseData.nextPageToken
+                Log.d("YoutubeRepository", "videoNextPageToken: $videoNextPageToken")
+                videos.addAll(responseData.items.map {
+                    VideoModel(it.snippet.title, it.snippet.publishedAt, it.snippet.thumbnails.high.url, it.id)
+                })
+                Log.d("YoutubeRepository", "video list: $videos")
+                App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))
+            } else {
+                Log.d("Callback", "Code: ${response?.code()} Message:${response?.message()}")
+            }
+        }
     }
 
+    fun getVideos() {
+        val youtubeAPI = createYoutubeAPI()
+
+//        val call = youtubeAPI.searchVideo()
+//        call.enqueue(searchCallback)
+
+        // get most popular videos
+//        val call = youtubeAPI.getPopularVideo()
+//        call.enqueue(popularVideosCallback)
+        val call: Call<YoutubeResponseModel>
+        call = if (videoNextPageToken.isEmpty()) {
+            youtubeAPI.searchVideoQuery(query = "movie")
+
+        } else {
+            youtubeAPI.searchVideoQuery(query = "movie", pageToken = videoNextPageToken)
+        }
+        call.enqueue(searchCallback)
+    }
 
 }

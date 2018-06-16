@@ -35,3 +35,13 @@ class YoutubeResponseModel(val nextPageToken: String,
         }
     }
 }
+
+class PopularResponseModel(val nextPageToken: String,
+                           val items: List<Item> = arrayListOf()){
+    data class Item(val id: String, val snippet: Snippet)
+    data class Snippet(val publishedAt: String, val title: String, val thumbnails: Thumbnails){
+        data class Thumbnails(val high: High) {
+            data class High( val url: String)
+        }
+    }
+}
