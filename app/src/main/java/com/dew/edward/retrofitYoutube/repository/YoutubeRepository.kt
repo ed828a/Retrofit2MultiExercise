@@ -17,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 //2018-02-19T22:56:12.000Z
-class YoutubeRepository {
+class YoutubeRepository (val success: () -> Unit, val errors: () -> Unit){
 
     var videoNextPageToken = ""
     val videos = App.videos
@@ -38,6 +38,7 @@ class YoutubeRepository {
     private val searchCallback = object : Callback<YoutubeResponseModel> {
         override fun onFailure(call: Call<YoutubeResponseModel>?, t: Throwable?) {
             t?.printStackTrace()
+            errors()
             Log.d("YoutubeRepository", "getting video from Youtube failed.")
         }
 
@@ -61,6 +62,7 @@ class YoutubeRepository {
         override fun onFailure(call: Call<PopularResponseModel>?, t: Throwable?) {
             t?.printStackTrace()
             Log.d("YoutubeRepository", "getting video from Youtube failed.")
+            errors()
         }
 
         override fun onResponse(call: Call<PopularResponseModel>?, response: Response<PopularResponseModel>?) {
@@ -73,6 +75,7 @@ class YoutubeRepository {
                 })
                 Log.d("YoutubeRepository", "video list: $videos")
                 App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))
+                success()
             } else {
                 Log.d("Callback", "Code: ${response?.code()} Message:${response?.message()}")
             }

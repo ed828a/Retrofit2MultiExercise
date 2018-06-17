@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.dew.edward.retrofit2multiexe.R
 import com.dew.edward.retrofitYoutube.adapter.VideoListAdapter
 import com.dew.edward.retrofitYoutube.repository.YoutubeRepository
@@ -15,7 +16,9 @@ import kotlinx.android.synthetic.main.activity_youtube_list.*
 
 class YoutubeListActivity : AppCompatActivity() {
 
-    val repository = YoutubeRepository()
+    val repository = YoutubeRepository({
+        Log.d("YoutubeListActivity", "lambda as initialized variable")
+    }, {})
     var morePageControl = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
