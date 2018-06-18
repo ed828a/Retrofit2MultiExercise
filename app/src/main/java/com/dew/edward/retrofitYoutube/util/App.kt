@@ -8,6 +8,7 @@ class App: Application() {
     companion object {
         lateinit var localBroadcastManager: LocalBroadcastManager
         lateinit var videos: ArrayList<VideoModel>
+        val videoLoadFromDB = arrayListOf<VideoModel>()
     }
 
     override fun onCreate() {

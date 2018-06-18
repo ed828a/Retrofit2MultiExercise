@@ -13,7 +13,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NetworkService {
+class NetworkService {
     //    val videosCache = arrayListOf<VideoModel>()
     val videosCache = App.videos
     var nextPageToken: String = ""
@@ -54,7 +54,7 @@ object NetworkService {
                     if (response != null && response.isSuccessful) {
                         val videosResponse: PopularResponseModel = response.body()!!
                         nextPageToken = videosResponse.nextPageToken
-//                        videosCache.clear()
+                        videosCache.clear()
                         videosCache.addAll(videosResponse.items.map {
                             VideoModel(it.snippet.title ?: "",
                                     it.snippet.publishedAt.extractDate() ?: "",
@@ -110,7 +110,7 @@ object NetworkService {
                     if (response != null && response.isSuccessful) {
                         val videosResponse: SearchResponseModel = response.body()!!
                         nextPageToken = videosResponse.nextPageToken
-//                        videosCache.clear()
+                        videosCache.clear()
                         videosCache.addAll(videosResponse.items.map {
                             VideoModel(
                                     it.snippet.title ?: "",
