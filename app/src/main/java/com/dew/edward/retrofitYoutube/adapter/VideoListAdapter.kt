@@ -24,6 +24,11 @@ class VideoListAdapter: RecyclerView.Adapter<VideoListAdapter.VideoListViewHolde
         val videoModel = videoList[position]
         holder.publishedAtView?.text = videoModel.publishedAt
         holder.titleView?.text = videoModel.title
+        if (videoModel.viewCount.isNotEmpty()) {
+            holder.viewCountView?.text = videoModel.viewCount + " views"
+        } else {
+            holder.viewCountView?.text = ""
+        }
         GlideApp.with(holder.itemView.context).load(videoModel.thumbnail).centerCrop().into(holder.thumbView!!)
     }
 
@@ -31,5 +36,6 @@ class VideoListAdapter: RecyclerView.Adapter<VideoListAdapter.VideoListViewHolde
         val thumbView = itemView?.imageThumb
         val titleView = itemView?.textTitle
         val publishedAtView = itemView?.textPublishedAt
+        val viewCountView = itemView?.textViewCount
     }
 }

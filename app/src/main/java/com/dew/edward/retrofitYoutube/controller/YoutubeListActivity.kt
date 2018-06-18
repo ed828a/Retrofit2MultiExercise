@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import com.dew.edward.retrofit2multiexe.R
 import com.dew.edward.retrofitYoutube.adapter.VideoListAdapter
+import com.dew.edward.retrofitYoutube.network.NetworkService
 import com.dew.edward.retrofitYoutube.repository.YoutubeRepository
 import com.dew.edward.retrofitYoutube.util.App
 import com.dew.edward.retrofitYoutube.util.BROADCAST_VIDEOLIST_DATA_CHANGED
@@ -19,7 +20,7 @@ class YoutubeListActivity : AppCompatActivity() {
     val repository = YoutubeRepository({
         Log.d("YoutubeListActivity", "lambda as initialized variable")
     }, {})
-    var morePageControl = true
+    var morePageControl = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +31,28 @@ class YoutubeListActivity : AppCompatActivity() {
         App.localBroadcastManager.registerReceiver(videoListDataChangedReceiver,
                 IntentFilter(BROADCAST_VIDEOLIST_DATA_CHANGED))
 
-        repository.getVideos()
+
+        NetworkService.getPopularVideos(
+                ({App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))}),
+                ({}))
+//        NetworkService.searchVideos("movie",
+//                ({App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))}),
+//                ({}))
     }
 
     private val videoListDataChangedReceiver = object: BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             recyclerVideoList.adapter.notifyDataSetChanged()
-            if (morePageControl){
-                repository.getVideos()
-                morePageControl = false
+            if (morePageControl < 5){
+
+                NetworkService.getPopularVideos(
+                        ({App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))}),
+                        ({}))
+//                NetworkService.searchVideos("movie",
+//                        ({App.localBroadcastManager.sendBroadcast(Intent(BROADCAST_VIDEOLIST_DATA_CHANGED))}),
+//                        ({}))
+
+                morePageControl++
             }
 
         }
