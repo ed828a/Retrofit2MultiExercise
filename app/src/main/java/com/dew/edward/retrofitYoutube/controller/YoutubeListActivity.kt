@@ -15,12 +15,8 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.dew.edward.retrofit2multiexe.R
-import com.dew.edward.retrofit2multiexe.R.id.recyclerVideoList
-import com.dew.edward.retrofit2multiexe.R.id.search_repo
 import com.dew.edward.retrofitYoutube.adapter.VideoListAdapter
 import com.dew.edward.retrofitYoutube.model.VideoModel
-import com.dew.edward.retrofitYoutube.network.NetworkService
-import com.dew.edward.retrofitYoutube.util.App
 import com.dew.edward.retrofitYoutube.util.DEFAULT_QUERY
 import com.dew.edward.retrofitYoutube.util.LAST_SEARCH_QUERY
 import com.dew.edward.retrofitYoutube.viewmodel.VideoViewModel
@@ -29,9 +25,9 @@ import kotlinx.android.synthetic.main.activity_youtube_list.*
 
 class YoutubeListActivity : AppCompatActivity() {
 
-    val networkService = NetworkService()
+
     lateinit var videoViewModel: VideoViewModel
-    var morePageControl = 0
+
     var receivingCount = 0
     private val adapter = VideoListAdapter()
 
@@ -51,25 +47,10 @@ class YoutubeListActivity : AppCompatActivity() {
             Toast.makeText(this, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         })
 
-
-//        App.localBroadcastManager.registerReceiver(videoListDataChangedReceiver,
-//                IntentFilter(BROADCAST_VIDEOLIST_DATA_CHANGED))
-
         setupScrollListener()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         videoViewModel.searchVideos(query)
         initSearch(query)
-    }
-
-    private fun initAdapter(){
-        recyclerVideoList.adapter = adapter
-        videoViewModel.videoList.observe(this, Observer<List<VideoModel>> {
-            Log.d("Activity", "list: ${it?.size}")
-            adapter.submitList(it)
-        })
-        videoViewModel.networkError.observe(this, Observer<String> {
-            Toast.makeText(this, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
-        })
     }
 
     private val videoListDataChangedReceiver = object: BroadcastReceiver(){
@@ -120,6 +101,9 @@ class YoutubeListActivity : AppCompatActivity() {
                 recyclerVideoList.scrollToPosition(0)
                 videoViewModel.searchVideos(it.toString())
                 adapter.submitList(null)
+            } else {
+                recyclerVideoList.scrollToPosition(0)
+                videoViewModel.searchVideos()
             }
         }
     }
@@ -128,9 +112,5 @@ class YoutubeListActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, videoViewModel.lastQueryValue())
     }
-    override fun onDestroy() {
 
-        App.localBroadcastManager.unregisterReceiver(videoListDataChangedReceiver)
-        super.onDestroy()
-    }
 }

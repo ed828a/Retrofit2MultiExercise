@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.dew.edward.retrofit2multiexe.R
 import com.dew.edward.retrofit2multiexe.module.GlideApp
 import com.dew.edward.retrofitYoutube.model.VideoModel
-import com.dew.edward.retrofitYoutube.util.App
 import kotlinx.android.synthetic.main.raw_video.view.*
 
 class VideoListAdapter : ListAdapter<VideoModel, VideoListAdapter.VideoListViewHolder>(VIDEO_COMPARATOR) {
