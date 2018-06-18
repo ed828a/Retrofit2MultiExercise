@@ -7,3 +7,5 @@ const val API_KEY = "AIzaSyDTSznqAXxWif2i5eIVyXmFxkQwbzbnS8w"
 const val NETWORK_PAGE_SIZE = 3
 const val DATABASE_PAGE_SIZE = 20
 const val VISIBLE_THRESHOLD = 5
+const val LAST_SEARCH_QUERY: String = "last_search_query"
+const val DEFAULT_QUERY = ""
