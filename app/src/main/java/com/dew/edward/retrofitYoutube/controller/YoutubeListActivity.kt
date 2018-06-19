@@ -27,10 +27,8 @@ import kotlinx.android.synthetic.main.activity_youtube_list.*
 
 class YoutubeListActivity : AppCompatActivity() {
 
-
     lateinit var videoViewModel: VideoViewModel
 
-    var receivingCount = 0
     private val adapter = VideoListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,14 +50,6 @@ class YoutubeListActivity : AppCompatActivity() {
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         videoViewModel.searchVideos(query)
         initSearch(query)
-    }
-
-    private val videoListDataChangedReceiver = object: BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            recyclerVideoList.adapter.notifyDataSetChanged()
-            receivingCount++
-            Log.d("videoListDataChangedReceiver", "Receiving Count: $receivingCount")
-        }
     }
 
     private fun initSearch(query: String) {
@@ -104,6 +94,7 @@ class YoutubeListActivity : AppCompatActivity() {
             inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, videoViewModel.lastQueryValue())
