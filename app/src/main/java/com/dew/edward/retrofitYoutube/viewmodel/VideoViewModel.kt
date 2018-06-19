@@ -8,6 +8,7 @@ import com.dew.edward.retrofitYoutube.model.SearchResult
 import com.dew.edward.retrofitYoutube.repository.YoutubeRepository
 import com.dew.edward.retrofitYoutube.util.VISIBLE_THRESHOLD
 import android.arch.lifecycle.Transformations
+import android.arch.paging.PagedList
 import com.dew.edward.retrofitYoutube.model.VideoModel
 
 class VideoViewModel(context: Context): ViewModel() {
@@ -20,13 +21,12 @@ class VideoViewModel(context: Context): ViewModel() {
         repository.search(it)
     }
 
-    val videoList: LiveData<List<VideoModel>> = Transformations.switchMap(searchResult) {
+    val videoList: LiveData<PagedList<VideoModel>> = Transformations.switchMap(searchResult) {
         searchResult -> searchResult.videoList
     }
     val networkError: LiveData<String> = Transformations.switchMap(searchResult) {
         searchResult -> searchResult.networkError
     }
-
 
     /**
      * Search a repository based on a query string.
@@ -34,12 +34,6 @@ class VideoViewModel(context: Context): ViewModel() {
     fun searchVideos(queryString: String = "") {
         lastQuery = queryString
         queryLiveData.postValue(queryString) // equivalent to repository.search(queryString)
-    }
-
-    fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
-        if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount) {
-                repository.requestMore(lastQuery)
-        }
     }
 
     fun lastQueryValue(): String? = queryLiveData.value

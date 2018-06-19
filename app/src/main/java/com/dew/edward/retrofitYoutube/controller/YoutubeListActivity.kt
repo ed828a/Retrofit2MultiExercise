@@ -3,6 +3,7 @@ package com.dew.edward.retrofitYoutube.controller
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -39,7 +40,7 @@ class YoutubeListActivity : AppCompatActivity() {
         videoViewModel = ViewModelProviders.of(this, ViewModelFactory(this))
                                             .get(VideoViewModel::class.java)
         recyclerVideoList.adapter = adapter
-        videoViewModel.videoList.observe(this, Observer<List<VideoModel>> {
+        videoViewModel.videoList.observe(this, Observer<PagedList<VideoModel>> {
             Log.d("Activity", "list: ${it?.size}")
             adapter.submitList(it)
         })
@@ -47,7 +48,6 @@ class YoutubeListActivity : AppCompatActivity() {
             Toast.makeText(this, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         })
 
-        setupScrollListener()
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
         videoViewModel.searchVideos(query)
         initSearch(query)
@@ -59,19 +59,6 @@ class YoutubeListActivity : AppCompatActivity() {
             receivingCount++
             Log.d("videoListDataChangedReceiver", "Receiving Count: $receivingCount")
         }
-    }
-
-    private fun setupScrollListener(){
-        val layoutManager = recyclerVideoList.layoutManager as LinearLayoutManager
-        recyclerVideoList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                videoViewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount)
-            }
-        })
     }
 
     private fun initSearch(query: String) {
@@ -112,5 +99,4 @@ class YoutubeListActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, videoViewModel.lastQueryValue())
     }
-
 }

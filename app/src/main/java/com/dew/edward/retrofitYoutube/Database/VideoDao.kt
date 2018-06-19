@@ -1,6 +1,7 @@
 package com.dew.edward.retrofitYoutube.Database
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.DataSource
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -16,7 +17,7 @@ interface VideoDao {
 
     // call this everytime when UI wants contains to show.
     @Query("SELECT * FROM videos ORDER BY title ASC")
-    fun getVideos(): LiveData<List<VideoModel>>
+    fun getVideos(): DataSource.Factory<Int, VideoModel>
 
     // call this everytime when a new query starts
     @Query("DELETE FROM videos")
