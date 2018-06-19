@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.dew.edward.retrofit2multiexe.R
 import com.dew.edward.retrofitYoutube.adapter.VideoListAdapter
@@ -67,6 +68,7 @@ class YoutubeListActivity : AppCompatActivity() {
         search_repo.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 updateRepoListFromInput()
+                hideKeyboard()
                 true
             } else {
                 false
@@ -75,6 +77,7 @@ class YoutubeListActivity : AppCompatActivity() {
         search_repo.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 updateRepoListFromInput()
+                hideKeyboard()
                 true
             } else {
                 false
@@ -95,6 +98,12 @@ class YoutubeListActivity : AppCompatActivity() {
         }
     }
 
+    private fun hideKeyboard(){
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (inputManager.isAcceptingText){
+            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(LAST_SEARCH_QUERY, videoViewModel.lastQueryValue())

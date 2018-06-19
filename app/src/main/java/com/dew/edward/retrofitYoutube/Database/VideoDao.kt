@@ -16,7 +16,7 @@ interface VideoDao {
     fun addVideos(posts: List<VideoModel>)
 
     // call this everytime when UI wants contains to show.
-    @Query("SELECT * FROM videos ORDER BY title ASC")
+    @Query("SELECT * FROM videos ORDER BY publishedAt DESC")
     fun getVideos(): DataSource.Factory<Int, VideoModel>
 
     // call this everytime when a new query starts

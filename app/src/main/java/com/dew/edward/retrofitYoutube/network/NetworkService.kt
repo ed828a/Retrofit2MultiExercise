@@ -53,7 +53,7 @@ class NetworkService {
 
                     if (response != null && response.isSuccessful) {
                         val videosResponse: PopularResponseModel = response.body()!!
-                        nextPageToken = videosResponse.nextPageToken
+                        nextPageToken = videosResponse.nextPageToken ?: ""
                         videosCache.clear()
                         videosCache.addAll(videosResponse.items.map {
                             VideoModel(it.snippet.title ?: "",

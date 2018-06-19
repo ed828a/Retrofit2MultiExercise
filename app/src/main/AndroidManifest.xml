@@ -28,7 +28,8 @@
         <activity android:name=".controllers.StackActivity" />
         <activity android:name=".controllers.GithubActivity" />
         <activity android:name=".controllers.TwitterActivity" />
-        <activity android:name="com.dew.edward.retrofitYoutube.controller.YoutubeListActivity"></activity>
+        <activity android:name="com.dew.edward.retrofitYoutube.controller.YoutubeListActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>
